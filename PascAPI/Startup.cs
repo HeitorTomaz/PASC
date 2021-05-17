@@ -46,8 +46,12 @@ namespace PASC
         public void ConfigureServices(IServiceCollection services)
         {
 
-            //Postgree
-            var connection = Configuration.GetConnectionString("PostgreeConnection");
+            //Postgre local
+            var connection = Configuration.GetConnectionString("PostgreConnection");
+            
+            //postgre Web
+            //var connection = Configuration.GetConnectionString("PostgreOnlineConnection");
+            
             services.AddDbContext<Models.PascContext>
                 (options => options.UseNpgsql(connection));
 
