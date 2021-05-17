@@ -9,13 +9,13 @@ API feita em Asp.Net Core 3.1
 ```
 https://visualstudio.microsoft.com/pt-br/downloads/
 ```
-* Download & Install Postgree (Para Windows 10 utilize a versão 10.x)  
+* Download & Install Postgre (Para Windows 10 utilize a versão 10.x)  
 Anote a senha que você colocar durante a instalação.  
 Essa será a senha de administração do banco de dados na sua máquina.
 ```
 https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
 ```
-* Baixe algum client de Banco de dados Postgree  
+* Baixe algum client de Banco de dados Postgre  
 Indico o Dbeaver:
 ```
 https://dbeaver.io/download/
