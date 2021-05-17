@@ -292,9 +292,12 @@ namespace PASC.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
+                    b.Property<int?>("ParentCategoryQuestionCategoryId")
+                        .HasColumnType("integer");
+
                     b.HasKey("QuestionCategoryId");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("ParentCategoryQuestionCategoryId");
 
                     b.ToTable("QuestionCategory");
                 });
@@ -330,14 +333,9 @@ namespace PASC.Migrations
                     b.Property<int>("UnityId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("integer");
-
                     b.HasKey("SectorId");
 
                     b.HasIndex("UnityId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Sector");
                 });
@@ -364,10 +362,13 @@ namespace PASC.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<DateTime>("Birth")
+                    b.Property<DateTime?>("Birth")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("CPF")
+                        .HasColumnType("text");
+
+                    b.Property<string>("City")
                         .HasColumnType("text");
 
                     b.Property<string>("District")
@@ -385,13 +386,16 @@ namespace PASC.Migrations
                     b.Property<string>("PhotoPath")
                         .HasColumnType("text");
 
+                    b.Property<string>("SignInProvider")
+                        .HasColumnType("text");
+
                     b.Property<string>("State")
                         .HasColumnType("text");
 
                     b.Property<string>("Surname")
                         .HasColumnType("text");
 
-                    b.Property<string>("city")
+                    b.Property<string>("UserIdpId")
                         .HasColumnType("text");
 
                     b.HasKey("UserId");
@@ -604,11 +608,11 @@ namespace PASC.Migrations
 
             modelBuilder.Entity("PASC.Models.QuestionCategory", b =>
                 {
-                    b.HasOne("PASC.Models.QuestionCategory", "Category")
+                    b.HasOne("PASC.Models.QuestionCategory", "ParentCategory")
                         .WithMany("SubCategories")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("ParentCategoryQuestionCategoryId");
 
-                    b.Navigation("Category");
+                    b.Navigation("ParentCategory");
                 });
 
             modelBuilder.Entity("PASC.Models.Sector", b =>
@@ -618,10 +622,6 @@ namespace PASC.Migrations
                         .HasForeignKey("UnityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("PASC.Models.User", null)
-                        .WithMany("Sectors")
-                        .HasForeignKey("UserId");
 
                     b.Navigation("Unity");
                 });
@@ -704,7 +704,7 @@ namespace PASC.Migrations
                         .IsRequired();
 
                     b.HasOne("PASC.Models.User", "User")
-                        .WithMany()
+                        .WithMany("UserSector")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -781,13 +781,13 @@ namespace PASC.Migrations
 
                     b.Navigation("Phones");
 
-                    b.Navigation("Sectors");
-
                     b.Navigation("UserAcceptances");
 
                     b.Navigation("UserBuildings");
 
                     b.Navigation("UserRoles");
+
+                    b.Navigation("UserSector");
                 });
 #pragma warning restore 612, 618
         }

@@ -56,14 +56,15 @@ namespace PASC.Migrations
                     QuestionCategoryId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Description = table.Column<string>(type: "text", nullable: true),
-                    CategoryId = table.Column<int>(type: "integer", nullable: true)
+                    CategoryId = table.Column<int>(type: "integer", nullable: true),
+                    ParentCategoryQuestionCategoryId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_QuestionCategory", x => x.QuestionCategoryId);
                     table.ForeignKey(
-                        name: "FK_QuestionCategory_QuestionCategory_CategoryId",
-                        column: x => x.CategoryId,
+                        name: "FK_QuestionCategory_QuestionCategory_ParentCategoryQuestionCat~",
+                        column: x => x.ParentCategoryQuestionCategoryId,
                         principalTable: "QuestionCategory",
                         principalColumn: "QuestionCategoryId",
                         onDelete: ReferentialAction.Restrict);
@@ -125,12 +126,14 @@ namespace PASC.Migrations
                     Name = table.Column<string>(type: "text", nullable: true),
                     Surname = table.Column<string>(type: "text", nullable: true),
                     CPF = table.Column<string>(type: "text", nullable: true),
-                    Birth = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    Birth = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     PhotoPath = table.Column<string>(type: "text", nullable: true),
                     State = table.Column<string>(type: "text", nullable: true),
-                    city = table.Column<string>(type: "text", nullable: true),
+                    City = table.Column<string>(type: "text", nullable: true),
                     District = table.Column<string>(type: "text", nullable: true),
                     Height = table.Column<double>(type: "double precision", nullable: false),
+                    UserIdpId = table.Column<string>(type: "text", nullable: true),
+                    SignInProvider = table.Column<string>(type: "text", nullable: true),
                     GenderId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
@@ -164,6 +167,26 @@ namespace PASC.Migrations
                         column: x => x.QuestionCategoryId,
                         principalTable: "QuestionCategory",
                         principalColumn: "QuestionCategoryId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Sector",
+                columns: table => new
+                {
+                    SectorId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Description = table.Column<string>(type: "text", nullable: true),
+                    UnityId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Sector", x => x.SectorId);
+                    table.ForeignKey(
+                        name: "FK_Sector_Unity_UnityId",
+                        column: x => x.UnityId,
+                        principalTable: "Unity",
+                        principalColumn: "UnityId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -247,33 +270,6 @@ namespace PASC.Migrations
                         principalTable: "User",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Sector",
-                columns: table => new
-                {
-                    SectorId = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Description = table.Column<string>(type: "text", nullable: true),
-                    UnityId = table.Column<int>(type: "integer", nullable: false),
-                    UserId = table.Column<int>(type: "integer", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Sector", x => x.SectorId);
-                    table.ForeignKey(
-                        name: "FK_Sector_Unity_UnityId",
-                        column: x => x.UnityId,
-                        principalTable: "Unity",
-                        principalColumn: "UnityId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Sector_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -361,33 +357,6 @@ namespace PASC.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserBuilding",
-                columns: table => new
-                {
-                    UserBuildingId = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Created = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    BuildingId = table.Column<int>(type: "integer", nullable: false),
-                    UserId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserBuilding", x => x.UserBuildingId);
-                    table.ForeignKey(
-                        name: "FK_UserBuilding_Building_BuildingId",
-                        column: x => x.BuildingId,
-                        principalTable: "Building",
-                        principalColumn: "BuildingId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_UserBuilding_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "UserSector",
                 columns: table => new
                 {
@@ -408,6 +377,33 @@ namespace PASC.Migrations
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_UserSector_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserBuilding",
+                columns: table => new
+                {
+                    UserBuildingId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Created = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    BuildingId = table.Column<int>(type: "integer", nullable: false),
+                    UserId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserBuilding", x => x.UserBuildingId);
+                    table.ForeignKey(
+                        name: "FK_UserBuilding_Building_BuildingId",
+                        column: x => x.BuildingId,
+                        principalTable: "Building",
+                        principalColumn: "BuildingId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserBuilding_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "UserId",
@@ -498,19 +494,14 @@ namespace PASC.Migrations
                 column: "QuestionCategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_QuestionCategory_CategoryId",
+                name: "IX_QuestionCategory_ParentCategoryQuestionCategoryId",
                 table: "QuestionCategory",
-                column: "CategoryId");
+                column: "ParentCategoryQuestionCategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Sector_UnityId",
                 table: "Sector",
                 column: "UnityId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Sector_UserId",
-                table: "Sector",
-                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_User_GenderId",
@@ -605,6 +596,9 @@ namespace PASC.Migrations
                 name: "Sector");
 
             migrationBuilder.DropTable(
+                name: "User");
+
+            migrationBuilder.DropTable(
                 name: "Question");
 
             migrationBuilder.DropTable(
@@ -614,16 +608,13 @@ namespace PASC.Migrations
                 name: "Unity");
 
             migrationBuilder.DropTable(
-                name: "User");
+                name: "Gender");
 
             migrationBuilder.DropTable(
                 name: "QuestionCategory");
 
             migrationBuilder.DropTable(
                 name: "Campi");
-
-            migrationBuilder.DropTable(
-                name: "Gender");
         }
     }
 }

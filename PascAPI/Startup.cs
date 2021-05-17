@@ -62,9 +62,6 @@ namespace PASC
             services.AddScoped<IUserFactory, UserFactory>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<DAL.ISql, DAL.Sql>();
-            //services.Configure<Services.Storage.StorageConfig>(Configuration.GetSection("StorageConfig"));
-            //services.AddScoped<Services.Storage.StorageHelper>();
-
 
 
             services
@@ -90,7 +87,7 @@ namespace PASC
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "You api title", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "PASC", Version = "v1" });
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Description = @"JWT Authorization header using the Bearer scheme. 

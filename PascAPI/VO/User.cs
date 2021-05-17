@@ -10,18 +10,22 @@ namespace PASC.VO
 {
     public class User
     {
-        public string UserId { get; set; }
+        public string UserIdpId { get; set; }
         public string Name { get; set; }
         public DateTime? Birth { get; set; }
-        public string FamilyName { get; set; }
-        public string JobTitle { get; set; }
+        public int Age { get; set; }
+        public string Surname { get; set; }
+        public string Sector { get; set; }
         public string City { get; set; }
+        public string District { get; set; }
+        public string Cpf { get; set; }
         public List<string> Emails { get; set; }
+        public string EmailVerified { get; set; }
 
         [DataType(DataType.PhoneNumber)]
-        public string PhoneNumber { get; set; }
+        public List<string> PhoneNumbers { get; set; }
 
-        public Gender Gender { get; set; }
-        public string IdentityProvider { get; internal set; }
+        public Gender? Gender { get; set; }
+        public string SignInProvider { get; internal set; }
     }
 }

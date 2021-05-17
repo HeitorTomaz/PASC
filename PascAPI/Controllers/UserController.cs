@@ -25,23 +25,17 @@ namespace PASC.Controllers
         private readonly ILogger _log;
         private readonly string _TraceIdentifier;
         private readonly IUserFactory _userFactory;
-        //private readonly StorageHelper _storage;
-
-        private readonly int maxPhotos = 6;
 
         public UserController(IUserFactory userFactory, IHttpContextAccessor accessor, DAL.ISql sql,
                                 ILogger<UserController> log)
         {
             _log = log;
-            //Apaguei só pra exibir
             _user = userFactory.GenerateUser();
             _sql = sql;
             _userFactory = userFactory;
             _TraceIdentifier = accessor.HttpContext.TraceIdentifier;
-            //Apaguei só pra exibir
-            //_user = Util.ControllersUtil.ReadUser(_user, _sql, _log, _TraceIdentifier);
+            _user = Util.ControllersUtil.ReadUser(_user, _sql, _log, _TraceIdentifier);
             
-            //_storage = storageHelper;
         }
 
 
@@ -49,11 +43,11 @@ namespace PASC.Controllers
         [HttpGet]
         public ActionResult GetUser()
         {
-            _log.LogInformation("{_TraceIdentifier} | Begin get user | code: {Code}", _TraceIdentifier, _user.UserId);
+            _log.LogInformation("{_TraceIdentifier} | Begin get user | code: {Code}", _TraceIdentifier, _user.UserIdpId);
 
             var userDto = _userFactory.GenerateUserDto(_user);
 
-            _log.LogInformation("{_TraceIdentifier} | End get user | code: {Code}", _TraceIdentifier, _user.UserId);
+            _log.LogInformation("{_TraceIdentifier} | End get user | code: {Code}", _TraceIdentifier, _user.UserIdpId);
 
             return Ok(userDto);
 
@@ -88,91 +82,6 @@ namespace PASC.Controllers
         //    return Ok();
         //}
 
-
-        //// POST user instagram
-        //[HttpPost("Instagram/{instagram}")]
-        //public ActionResult SetUserInstagram(string instagram)
-        //{
-        //    _log.LogInformation("{_TraceIdentifier} | Begin set user instagram | code: {Code}", _TraceIdentifier, _user.UserId);
-        //    _sql.SetUserInstagram(_user, instagram);
-        //    _log.LogInformation("{_TraceIdentifier} | End set user instagram | code: {Code}", _TraceIdentifier, _user.UserId);
-
-        //    return Ok();
-        //}
-
-        //// POST user phone
-        //[HttpPost("Phone/{phone}")]
-        //[DataType(DataType.PhoneNumber)]
-        //public ActionResult SetUserphone(string phone)
-        //{
-        //    if (!ModelState.IsValid)
-        //        return StatusCode((int)HttpStatusCode.BadRequest);
-
-        //    _log.LogInformation("{_TraceIdentifier} | Begin set user phone | code: {Code}", _TraceIdentifier, _user.UserId);
-        //    _sql.SetUserPhone(_user, phone);
-        //    _log.LogInformation("{_TraceIdentifier} | End set user phone | code: {Code}", _TraceIdentifier, _user.UserId);
-
-        //    return Ok();
-        //}
-
-        //// POST user facebook
-        //[HttpPost("Facebook/{facebook}")]
-        //public ActionResult SetUserFacebook(string facebook)
-        //{
-        //    _log.LogInformation("{_TraceIdentifier} | Begin set user facebook | code: {Code}", _TraceIdentifier, _user.UserId);
-        //    _sql.SetUserFacebook(_user, facebook);
-        //    _log.LogInformation("{_TraceIdentifier} | End set user facebook | code: {Code}", _TraceIdentifier, _user.UserId);
-
-        //    return Ok();
-        //}
-
-//        // POST user photo
-//        [HttpPost("Photo/{number}")]
-//        public async Task<ActionResult> PostPhotoAsync(IFormFile image, int number = 1)
-//        {
-//            _log.LogInformation("{_TraceIdentifier} | Begin add user photo | code: {Code}", _TraceIdentifier, _user.UserId);
-
-//            try
-//            {
-//                VO.Image img = new VO.Image();
-//                //verify content type is valid
-//                var type = Util.FilesUtil.GetImagesContentType(image?.FileName);
-//#pragma warning disable S2589 // Boolean expressions should not be gratuitous
-//                if (image == null || image.Length <= 0 || type == null || image.Length > ByteSize.FromMegaBytes(5).Bytes)
-//#pragma warning restore S2589 // Boolean expressions should not be gratuitous
-//                {
-//                    return StatusCode((int)HttpStatusCode.UnsupportedMediaType);
-//                }
-//                else
-//                {
-//                    var userPhotoNumbers = _sql.GetUserPhotoNumbers(_user);
-//                    if ((userPhotoNumbers.Count > 0 && number > userPhotoNumbers.Max() + 1) || number < 1 || number > maxPhotos)
-//                        return StatusCode((int)HttpStatusCode.BadRequest);
-
-//                    var actualPhoto =_sql.GetUserPhoto(_user, number);
-//                    using (Stream inputStream = image.OpenReadStream())
-//                    {
-//                        img.Name = (actualPhoto == null ? Guid.NewGuid().ToString() : Path.GetFileNameWithoutExtension(actualPhoto.Name)) 
-//                                    + Path.GetExtension(image.FileName).ToLowerInvariant();
-
-//                        await _storage.UploadFileToStorage(inputStream, img.Name);
-//                    }
-                    
-//                    _sql.SetUserPhoto(_user, img, number);
-//                    return Ok();
-//                }
-//            }
-//            catch
-//            {
-//                _log.LogError("{_TraceIdentifier} | Add user photo | code: {Code}", _TraceIdentifier, _user.UserId);
-//                throw;
-//            }
-//            finally
-//            {
-//                _log.LogInformation("{_TraceIdentifier} | End add user photo | code: {Code}", _TraceIdentifier, _user.UserId);
-
-//            }
-//        }
 
     }
 }

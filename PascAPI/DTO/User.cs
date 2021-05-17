@@ -11,14 +11,15 @@ namespace PASC.DTO
     {
         public User() { }
 
-        public string Guid { get; set; }
+        public string userIdpId { get; set; }
         public string Name { get; set; }
-        public List<string> Email { get; set; }
-        public string  IdentityProvider { get; set; }
+        public List<string> Emails { get; set; }
+        public string EmailVerified { get; set; }
+        public string  SignInProvider { get; set; }
         public int? Age { get; set; }
         public DateTime? Birth { get; set; }
 
         [DataType(DataType.PhoneNumber)]
-        public string PhoneNumber { get; set; }
+        public List<string> PhoneNumbers { get; set; }
     }
 }

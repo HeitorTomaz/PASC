@@ -14,7 +14,7 @@ namespace PASC.Models
         public IList<Question> Questions { get; set; }
 
         public int? CategoryId { get; set; }
-        public QuestionCategory Category { get; set; }
+        public QuestionCategory ParentCategory { get; set; }
 
         public IList<QuestionCategory> SubCategories { get; set; }
     }

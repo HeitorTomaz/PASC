@@ -24,27 +24,16 @@ namespace PASC.Services
         public VO.User GenerateUser()
         {
             var usr = _accessor.HttpContext.User;
-            //var idp = usr.Claims.FirstOrDefault(x => x.Type == "http://schemas.microsoft.com/identity/claims/identityprovider");
-            //var Code = usr.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
-            //var Name = usr.Claims.FirstOrDefault(x => x.Type == "name");
-            //var FamilyName = usr.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Surname);
-            //var JobTitle = usr.Claims.FirstOrDefault(x => x.Type == "jobTitle");
-            //var City = usr.Claims.FirstOrDefault(x => x.Type == "city");
-            //var Country = usr.Claims.FirstOrDefault(x => x.Type == "country");
-            //var PostalCode = usr.Claims.FirstOrDefault(x => x.Type == "postalCode");
-            var FirebaseAuth = JsonSerializer.Deserialize<Firebase>(usr.Claims.FirstOrDefault(x => x.Type == "firebase").Value) ;  
-
+            var usrId = usr.Claims.FirstOrDefault(x => x.Type == "user_id").Value ;
+            var emailVerified = usr.Claims.FirstOrDefault(x => x.Type == "email_verified").Value;
+            var FirebaseAuth = JsonSerializer.Deserialize<Firebase>(usr.Claims.FirstOrDefault(x => x.Type == "firebase").Value) ;
+            
             return new VO.User()
             {
-                //Code = Code.Value,
-                //Name = Name?.Value,
-                //FamilyName = FamilyName?.Value,
-                //JobTitle = JobTitle?.Value,
-                //City = City?.Value,
-                //Country = Country?.Value,
-                //PostalCode = PostalCode?.Value,
+                SignInProvider = FirebaseAuth.sign_in_provider,
+                UserIdpId = usrId,
                 Emails = FirebaseAuth.identities.email,
-                IdentityProvider = FirebaseAuth.sign_in_provider
+                EmailVerified = emailVerified
             };
         }
 
@@ -58,10 +47,12 @@ namespace PASC.Services
             {
                 Name = user.Name,
                 Age = age,
-                PhoneNumber = user.PhoneNumber,
+                PhoneNumbers = user.PhoneNumbers,
                 Birth = user.Birth,
-                Email = user.Emails,
-                IdentityProvider = user.IdentityProvider
+                Emails = user.Emails,
+                SignInProvider = user.SignInProvider,
+                userIdpId = user.UserIdpId,
+                EmailVerified = user.EmailVerified
             };
         }
 
