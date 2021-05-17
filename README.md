@@ -65,6 +65,18 @@ Execute o comando:
 ```
 update-database
 ```
+<div align="center">
+  <a href="https://github.com/HeitorTomaz/PASC">
+    <img src="./Media/update-database.png" alt="PASC">
+  </a>
+</div>
+Após isso poderemos ver a estrutura da base já criada no banco.
+<div align="center">
+  <a href="https://github.com/HeitorTomaz/PASC">
+    <img src="./Media/DB.png" alt="PASC">
+  </a>
+</div>
+
 No ícone de "Play" selecione "PascAPI" e execute.  
 Quando a página abrir clique em Authorize na direita e preencha com o token gerado na página de testes.
 <div align="center">
