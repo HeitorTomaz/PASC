@@ -22,13 +22,13 @@ https://dbeaver.io/download/
 ```
 
 ## Iniciando o banco de dados
-Abra o DBeaver, clique em conectar e selecione SQL > PostgreSQL.   
+* Abra o DBeaver, clique em conectar e selecione SQL > PostgreSQL.   
     Preencha com a senha de administração e clique em conectar.  
-Será necessário criar um usuário para a aplicação:  
+* Será necessário criar um usuário para a aplicação:  
     Botão direito em Roles > Create New Role  
     Usuário padrão de teste: pasc1  
     Senha padrão de teste: pasc1teste  
-Precisamos dar permissão de editar o banco ao usuário:  
+* Precisamos dar permissão de editar o banco ao usuário:  
     Dois cliques no usuário  
     Selecione a role "Super User" e clique em "save" na parte inferior  
 
@@ -49,9 +49,10 @@ Para acessar basta abrir:
     <img src="Media/WebTest.png" alt="PASC">
   </a>
 </div>
+
 Você pode criar um novo usuário, logar com um usuário criado e exibir o token desse usuário.  
 Lembre-se que o usuário ficará salvo na firebase após você clicar em "Criar Conta".  
-Para inspecionar o token que foi gerado pode acessar o seguinte endereço e colar o token na caixa da esquerda:
+Para inspecionar o token que foi gerado pode acessar o seguinte endereço e colar o token na caixa da esquerda:  
 ```
 https://jwt.io/
 ```
