@@ -59,6 +59,12 @@ https://jwt.io/
 
 ## API
 Abra o arquivo PASC.sln no Visual Studio  
+Compile o projeto (Ctrl+Shift+B)  
+Atualize a versão do banco de dados. Para isso, abra o Console do Gerenciador de Pacotes (Ferramentas > Gerenciador de pacotes do NuGet > Console do Gerenciador de Pacotes)  
+Execute o comando:
+```
+update-database
+```
 No ícone de "Play" selecione "PascAPI" e execute.  
 Quando a página abrir clique em Authorize na direita e preencha com o token gerado na página de testes.
 <div align="center">
