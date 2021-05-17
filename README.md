@@ -5,17 +5,17 @@ Projeto da disciplina Engenharia de Software - UFRJ - 2020.2
 API feita em Asp.Net Core 3.1
 
 ## Instalando os componentes
-Download & Install Visual Studio 2019 Community
+* Download & Install Visual Studio 2019 Community
 ```
 https://visualstudio.microsoft.com/pt-br/downloads/
 ```
-Download & Install Postgree (Para Windows 10 utilize a versão 10.x)  
+* Download & Install Postgree (Para Windows 10 utilize a versão 10.x)  
 Anote a senha que você colocar durante a instalação.  
 Essa será a senha de administração do banco de dados na sua máquina.
 ```
 https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
 ```
-Baixe algum client de Banco de dados Postgree  
+* Baixe algum client de Banco de dados Postgree  
 Indico o Dbeaver:
 ```
 https://dbeaver.io/download/
@@ -58,10 +58,10 @@ https://jwt.io/
 ```
 
 ## API
-Abra o arquivo PASC.sln no Visual Studio  
-Compile o projeto (Ctrl+Shift+B)  
-Atualize a versão do banco de dados. Para isso, abra o Console do Gerenciador de Pacotes (Ferramentas > Gerenciador de pacotes do NuGet > Console do Gerenciador de Pacotes)  
-Execute o comando:
+* Abra o arquivo PASC.sln no Visual Studio  
+* Compile o projeto (Ctrl+Shift+B)  
+* Atualize a versão do banco de dados. Para isso, abra o Console do Gerenciador de Pacotes (Ferramentas > Gerenciador de pacotes do NuGet > Console do Gerenciador de Pacotes)  
+* Execute o comando:
 ```
 update-database
 ```
